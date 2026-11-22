@@ -1,6 +1,7 @@
 {
   "name": "digital-rain",
   "version": "0.1.0",
-  "description": "Dark green code-rain theme with an animated gauge for context window, cache and cost",
+  "description": "Dark green code-rain theme that shows context window, rate limits and session cost",
+  "license": "MIT",
   "types": "./types/index.d.ts"
 }

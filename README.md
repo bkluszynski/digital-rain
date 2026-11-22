@@ -1,44 +1,52 @@
 # digital-rain
 
-Ein dunkles, grünes Code-Regen-Theme für Claude Code (Desktop- und Mobile-App), das den Verbrauch der Sitzung im Hintergrund und in einem schmalen Streifen über dem Prompt anzeigt.
+**English** · [Deutsch](README.de.md)
 
-## Was die Mod zeigt
+A dark, green code-rain theme for Claude Code (desktop and mobile apps) that shows the session's usage in the backdrop and in a slim strip above the prompt.
 
-- **Hintergrund:** Grüner Zeichenregen in drei Tiefenebenen fällt in einen „Datensee". Der Pegel des Sees entspricht dem Füllstand des Kontextfensters; ab 70 % wird er gelb, ab 90 % rot. Gepunktete Linien markieren 25, 50, 75 und 100 %.
-- **Streifen über dem Prompt:** je ein schmaler Balken für
-  - **KONTEXT** – Prozent und Tokens,
-  - **5 STD** – das 5-Stunden-Limit mit Reset-Uhrzeit,
-  - **WOCHE** – das Wochenlimit mit Reset-Zeitpunkt,
-  - **KOSTEN** – die geschätzten Kosten der Sitzung.
-- **Farben:** schwarz-grüne Flächen, weißer Text, Grün für Akzente. Das Theme ist nur für den Dark-Mode gemacht.
+## What it shows
 
-Die Limit-Balken erscheinen nur mit einem Abo, das diese Fenster meldet. Die Kosten sind eine lokale Schätzung zum Listenpreis und keine Abrechnung; innerhalb eines Abos wird dieser Betrag nicht berechnet.
+- **Backdrop:** green glyph rain in three depth layers falls into a "data pool". The pool's level is the fill of the context window; it turns amber from 70 % and red from 90 %. Dotted lines mark 25, 50, 75 and 100 %.
+- **Strip above the prompt:** one slim bar each for
+  - **KONTEXT** – context window, percent and tokens,
+  - **5 STD** – the five-hour limit with its reset time,
+  - **WOCHE** – the weekly limit with its reset time,
+  - **KOSTEN** – the session's estimated cost.
+- **Colors:** black-green surfaces, white text, green for accents. The theme is made for dark mode only.
 
-Terminal und Editor-Erweiterungen zeichnen keine Themes; dort zeigt die Mod nichts an.
+The labels in the strip are German.
 
-## Installation
+The limit bars appear only on a subscription that reports these windows. The cost is a local estimate at list price, not a bill; inside a subscription that amount is not charged.
 
-Am Prompt einer Terminal-Sitzung von Claude Code:
+Terminals and editor extensions draw no themes, so the mod shows nothing there.
+
+## Install
+
+At the prompt of a Claude Code terminal session:
 
 ```
 /plugin install digital-rain --marketplace bkluszynski/digital-rain
 ```
 
-Danach mit `y` den Marketplace hinzufügen und einen Geltungsbereich wählen.
+Then answer `y` to add the marketplace and pick a scope.
 
-Aus einer Shell:
+From a shell:
 
 ```
 claude plugin install digital-rain --marketplace bkluszynski/digital-rain
 ```
 
-In der Desktop-App, wo `/plugin` nicht läuft: auf **+** neben dem Eingabefeld klicken, dann **Plugins**, **Add marketplace** mit `bkluszynski/digital-rain`, dann **Add plugin**.
+In the desktop app, where `/plugin` does not run: click **+** next to the prompt box, then **Plugins**, **Add marketplace** with `bkluszynski/digital-rain`, then **Add plugin**.
 
-## Entwicklung
+## Development
 
 ```
 claude plugin validate .
 claude plugin test .
 ```
 
-`hooks/scene.ts` baut die beiden SVG-Szenen (Hintergrund und Streifen), `hooks/register.tsx` setzt das Theme und speist die Messwerte ein. `hooks/make-colors.js` stammt unverändert aus dem Mod-Baukasten von Claude Code.
+`hooks/scene.ts` builds the two SVG scenes (backdrop and strip); `hooks/register.tsx` sets the theme and feeds in the readings.
+
+## License
+
+[MIT](LICENSE). `hooks/make-colors.js` and `hooks/make-colors.d.ts` are copied unchanged from Claude Code's mod kit and are not covered by this license.
