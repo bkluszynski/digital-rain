@@ -37,22 +37,25 @@ test('the strip shows the context and every limit window, in a steady order', as
   const ui = await $.ui.mount({ ...BAND, surface: 'desktop' })
   const svg = await ui.find({ type: 'Svg' })
 
-  expect(svg?.props.alt).toBe('KONTEXT 42% · 5 STD 73% · WOCHE 31% · KOSTEN ≈ $6.86')
+  // The labels follow the system's language: German there, English anywhere else.
+  expect(svg?.props.alt).toMatch(
+    /^(KONTEXT 42% · 5 STD 73% · WOCHE 31% · KOSTEN|CONTEXT 42% · 5 H 73% · WEEK 31% · COST) ≈ \$6\.86$/,
+  )
   expect(svg?.props.source).toContain('84k / 200k')
-  expect(svg?.props.source).toContain('Reset Do ')
+  expect(svg?.props.source).toContain('Reset ')
   expect(svg?.props.height).toBe(38)
   expect(svg?.props.isInteractive).toBeUndefined()
   await ui.unmount()
 
   const scene = await $.ui.mount({ ...SCENE, surface: 'desktop' })
-  expect((await scene.find({ type: 'Svg' }))?.props.source).toContain('KONTEXT 42%')
+  expect((await scene.find({ type: 'Svg' }))?.props.source).toMatch(/(KONTEXT|CONTEXT) 42%/)
   await scene.unmount()
 })
 
 test('before any measurement the strip rests at a dash', async $ => {
   const ui = await $.ui.mount({ ...BAND, surface: 'desktop' })
 
-  expect((await ui.find({ type: 'Svg' }))?.props.alt).toBe('KONTEXT –')
+  expect((await ui.find({ type: 'Svg' }))?.props.alt).toMatch(/^(KONTEXT|CONTEXT) –$/)
   await ui.unmount()
 })
 
@@ -76,7 +79,7 @@ test('the session start sets the look and seeds the strip', async ($, on) => {
 
   expect(look).toMatchObject({ backdrop: { scene: 'rain' } })
   const ui = await $.ui.mount({ ...BAND, surface: 'desktop' })
-  expect((await ui.find({ type: 'Svg' }))?.props.alt).toBe('KONTEXT 50% · 5 STD 8%')
+  expect((await ui.find({ type: 'Svg' }))?.props.alt).toMatch(/^(KONTEXT 50% · 5 STD|CONTEXT 50% · 5 H) 8%$/)
   await ui.unmount()
 })
 
@@ -86,7 +89,7 @@ test('the backdrop draws the rain and its pool on desktop and mobile', async $ =
     const source = (await ui.find({ type: 'Svg' }))?.props.source
 
     expect(source).toContain('@keyframes fall')
-    expect(source).toContain('KONTEXT –')
+    expect(source).toMatch(/(KONTEXT|CONTEXT) –/)
     await ui.unmount()
   }
 })

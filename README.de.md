@@ -14,6 +14,8 @@ Ein dunkles, grünes Code-Regen-Theme für Claude Code (Desktop- und Mobile-App)
   - **KOSTEN** – die geschätzten Kosten der Sitzung.
 - **Farben:** schwarz-grüne Flächen, weißer Text, Grün für Akzente. Das Theme ist nur für den Dark-Mode gemacht.
 
+Die Beschriftungen folgen der Systemsprache: Deutsch auf einem deutschen System, sonst Englisch (CONTEXT, 5 H, WEEK, COST). Reset-Zeiten nutzen das Uhrzeitformat und die Wochentagsnamen des Systems.
+
 Die Limit-Balken erscheinen nur mit einem Abo, das diese Fenster meldet. Die Kosten sind eine lokale Schätzung zum Listenpreis und keine Abrechnung; innerhalb eines Abos wird dieser Betrag nicht berechnet.
 
 Terminal und Editor-Erweiterungen zeichnen keine Themes; dort zeigt die Mod nichts an.

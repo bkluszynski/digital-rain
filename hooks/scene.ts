@@ -1,6 +1,10 @@
 import type { Limit, Usage } from '../types'
 
 const GLYPHS = 'ｦｱｳｴｵｶｷｹｺｻｼｽｾｿﾀﾂﾃﾅﾆﾇﾈﾊﾋﾎﾏﾐﾑﾒﾓﾔﾕﾗﾘﾜ0123456789'
+// The mod is told no language, so the labels follow the system's: German there, English anywhere else.
+const WORDS = Intl.DateTimeFormat().resolvedOptions().locale.startsWith('de')
+  ? { context: 'KONTEXT', fiveHours: '5 STD', week: 'WOCHE', cost: 'KOSTEN', estimate: 'Schätzung · Sitzung' }
+  : { context: 'CONTEXT', fiveHours: '5 H', week: 'WEEK', cost: 'COST', estimate: 'estimate · session' }
 const GREEN = '#22e06b'
 const AMBER = '#f0b429'
 const RED = '#ff5f5f'
@@ -79,7 +83,7 @@ export function backdropScene(level: number): string {
   const fill = Math.max(0, Math.min(100, level))
   const surface = Math.round(930 - fill * 8.1)
   const color = tone(fill)
-  const label = level < 0 ? 'KONTEXT –' : `KONTEXT ${fill}%`
+  const label = level < 0 ? `${WORDS.context} –` : `${WORDS.context} ${fill}%`
   let marks = ''
   let rows = ''
   let labels = ''
@@ -151,21 +155,19 @@ function short(tokens: number): string {
   return tokens >= 1000 ? `${Math.round(tokens / 1000)}k` : String(tokens)
 }
 
-/** `five_hour` reads 5 STD, `seven_day` WOCHE, a window under a model's name WOCHE · NAME. */
+/** `five_hour` reads 5 STD or 5 H, `seven_day` WOCHE or WEEK, any other window its own name. */
 export function limitLabel(kind: string): string {
   if (kind === 'five_hour') {
-    return '5 STD'
+    return WORDS.fiveHours
   }
 
   if (kind === 'seven_day') {
-    return 'WOCHE'
+    return WORDS.week
   }
-  const rest = kind.startsWith('seven_day_') ? `WOCHE · ${kind.slice(10)}` : kind
+  const rest = kind.startsWith('seven_day_') ? `${WORDS.week} · ${kind.slice(10)}` : kind
 
   return rest.replaceAll('_', ' ').toUpperCase()
 }
-
-const DAYS = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
 
 // The reset as a clock time, never a countdown: the strip redraws only when a figure moves.
 function reset(limit: Limit): string {
@@ -175,9 +177,12 @@ function reset(limit: Limit): string {
     return ''
   }
   const date = new Date(at)
-  const time = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
+  // The system's own clock format and weekday names.
+  const time = date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
 
-  return limit.kind === 'five_hour' ? `Reset ${time}` : `Reset ${DAYS[date.getDay()]} ${time}`
+  return limit.kind === 'five_hour'
+    ? `Reset ${time}`
+    : `Reset ${date.toLocaleDateString(undefined, { weekday: 'short' })} ${time}`
 }
 
 // `value` stands in for the bar where a figure has no ceiling to fill.
@@ -185,7 +190,7 @@ type Gauge = { label: string; percent: number | null; note: string; value?: stri
 
 function gauges(usage: Usage): Gauge[] {
   const context: Gauge = {
-    label: 'KONTEXT',
+    label: WORDS.context,
     percent: usage.percent,
     note: usage.tokens !== null && usage.window !== null ? `${short(usage.tokens)} / ${short(usage.window)}` : '',
   }
@@ -196,7 +201,7 @@ function gauges(usage: Usage): Gauge[] {
     ...usage.limits.slice(0, 2).map(limit => ({ label: limitLabel(limit.kind), percent: limit.percent, note: reset(limit) })),
     ...(usage.usd === null
       ? []
-      : [{ label: 'KOSTEN', percent: null, note: 'Schätzung · Sitzung', value: `≈ $${usage.usd.toFixed(2)}` }]),
+      : [{ label: WORDS.cost, percent: null, note: WORDS.estimate, value: `≈ $${usage.usd.toFixed(2)}` }]),
   ]
 }
 

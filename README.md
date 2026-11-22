@@ -8,13 +8,13 @@ A dark, green code-rain theme for Claude Code (desktop and mobile apps) that sho
 
 - **Backdrop:** green glyph rain in three depth layers falls into a "data pool". The pool's level is the fill of the context window; it turns amber from 70 % and red from 90 %. Dotted lines mark 25, 50, 75 and 100 %.
 - **Strip above the prompt:** one slim bar each for
-  - **KONTEXT** – context window, percent and tokens,
-  - **5 STD** – the five-hour limit with its reset time,
-  - **WOCHE** – the weekly limit with its reset time,
-  - **KOSTEN** – the session's estimated cost.
+  - **CONTEXT** – context window, percent and tokens,
+  - **5 H** – the five-hour limit with its reset time,
+  - **WEEK** – the weekly limit with its reset time,
+  - **COST** – the session's estimated cost.
 - **Colors:** black-green surfaces, white text, green for accents. The theme is made for dark mode only.
 
-The labels in the strip are German.
+The labels follow the system language: German on a German system (KONTEXT, 5 STD, WOCHE, KOSTEN), English everywhere else (CONTEXT, 5 H, WEEK, COST). Reset times use the system's clock format and weekday names.
 
 The limit bars appear only on a subscription that reports these windows. The cost is a local estimate at list price, not a bill; inside a subscription that amount is not charged.
 
