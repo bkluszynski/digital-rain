@@ -1,0 +1,6 @@
+{
+  "name": "digital-rain",
+  "version": "0.1.0",
+  "description": "Dark green code-rain theme with an animated gauge for context window, cache and cost",
+  "types": "./types/index.d.ts"
+}
